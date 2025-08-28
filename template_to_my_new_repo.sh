@@ -26,9 +26,8 @@ cd "$NEW_PATH"
 
 # Copy .env.example to .env if it exists
 if [[ -f .env.example ]]; then
-  cp .env.example .env
-  echo ".env.example copied to .env. Please update values as needed."
-    echo "📝 .env.example copied to .env. Please update values as needed."
+  mv .env.example .env
+  echo ".env.example moved to .env. Please update values as needed."
 fi
 
 # Remove existing git history
