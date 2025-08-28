@@ -17,10 +17,12 @@ NEW_NAME="$1"
 REMOTE_URL="$2"
 TEMPLATE_DIR=$(pwd)
 
-# Clone to new directory (copy all files except .git)
-mkdir "$NEW_NAME"
-rsync -av --progress "$TEMPLATE_DIR/" "$NEW_NAME/" --exclude .git
-cd "$NEW_NAME"
+# Create the new project directory one level up from the template
+PARENT_DIR=$(dirname "$TEMPLATE_DIR")
+NEW_PATH="$PARENT_DIR/$NEW_NAME"
+mkdir "$NEW_PATH"
+rsync -av --progress "$TEMPLATE_DIR/" "$NEW_PATH/" --exclude .git
+cd "$NEW_PATH"
 
 # Copy .env.example to .env if it exists
 if [[ -f .env.example ]]; then
