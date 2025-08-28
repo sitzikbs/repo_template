@@ -1,0 +1,24 @@
+---
+applyTo: "terminal"
+---
+# Instructions for Terminal Commands
+
+- **Operating System**: I am using Ubuntu zsh. Please provide Ubuntu commands (e.g., use `rm`, `ls`, `mkdir`).
+
+---
+
+## Safety and Confirmation
+- **Destructive Commands**: For any potentially destructive command like `rm` or `mv`, always include the `-i` flag to prompt before execution. For Git commands like `git reset` or `git push --force`, add a comment like `# DANGER: This is a destructive command. Please double-check your changes.`
+- **Piping to Shell**: Never suggest piping `curl` or `Invoke-WebRequest` directly into a shell. Suggest downloading the script first, then running it after user inspection.
+
+---
+
+## Git Workflow
+- **Branch Naming**: Follow the `type/short-description` format when suggesting `git checkout -b`. (e.g., `git checkout -b feat/new-login-page`).
+- **Commit Messages**: When suggesting `git commit -m`, use the Conventional Commits format (`feat: ...`, `fix: ...`).
+
+---
+
+## Project-Specific Commands
+- **Running the Project**: To run the Python server, use `poetry run python -m your_project_name.main`.
+- **Running Tests**: To run tests, use `poetry run pytest`.

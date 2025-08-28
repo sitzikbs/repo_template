@@ -1,0 +1,12 @@
+{
+    "recommendations": [
+        // Python core extension
+        "ms-python.python",
+        // Fast Python linter and formatter
+        "charliermarsh.ruff",
+        // Docstring generator
+        "njpwerner.autodocstring",
+        // TOML support
+        "tamasfe.even-better-toml"
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    // Python configuration
+    "python.defaultInterpreterPath": "./.venv/bin/python",
+    // Ruff configuration for Python
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports.ruff": "explicit",
+            "source.fixAll.ruff": "explicit"
+        }
+    },
+
+    // Notebook configuration for .ipynb files
+    "notebook.defaultFormatter": "charliermarsh.ruff",
+    "notebook.formatOnSave.enabled": true,
+    "notebook.codeActionsOnSave": {
+        "notebook.source.fixAll": "explicit",
+        "notebook.source.organizeImports": "explicit"
+    },
+    
+    // Editor configuration - 120 character line rule
+    "editor.rulers": [
+        120
+    ],
+    "github-enterprise.uri": "https://github.rbx.com/",
+    "python.testing.pytestArgs": [
+        "pipeline"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+}

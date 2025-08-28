@@ -1,0 +1,108 @@
+name: dependency-validation
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - 'Dockerfile'
+      - '.github/workflows/dependency-validation.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - 'Dockerfile'
+      - '.github/workflows/dependency-validation.yml'
+
+jobs:
+  validate-dependencies:
+    name: Validate Dependencies
+    runs-on: [ self-hosted, generic-linux ]
+    container:
+      image: docker.artifactory.rbx.com/autoanim-itw-motion-dataset:1.0.5
+      options: --user 1000
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify uv installation
+        run: |
+          echo "Checking uv installation..."
+          which uv
+          uv --version
+
+      - name: Clean existing environment
+        run: |
+          echo "Cleaning any existing virtual environment..."
+          rm -rf .venv || true
+
+      - name: Test uv sync
+        run: |
+          echo "=== Testing uv sync ==="
+          echo "This will fail the workflow if there are dependency conflicts"
+          echo "Installing main dependencies and development dependencies..."
+          uv sync --all-groups --verbose
+
+      - name: Verify environment setup
+        run: |
+          echo "=== Verifying environment setup ==="
+          echo "Virtual environment path:"
+          ls -la .venv/
+          echo ""
+          echo "Python executable:"
+          .venv/bin/python --version
+          echo ""
+          echo "Pip list (first 20 packages):"
+          .venv/bin/pip list | head -20
+
+      - name: Test import of critical packages
+        run: |
+          echo "=== Testing critical package imports ==="
+          .venv/bin/python -c "
+          import sys
+          print(f'Python version: {sys.version}')
+          
+          # Test critical imports that often cause issues
+          try:
+              import pytest
+              print('✅ pytest import successful')
+          except ImportError as e:
+              print(f'❌ pytest import failed: {e}')
+              sys.exit(1)
+          
+          try:
+              import scenedetect
+              print('✅ scenedetect import successful')
+          except ImportError as e:
+              print(f'❌ scenedetect import failed: {e}')
+              sys.exit(1)
+          
+          try:
+              import cv2
+              print('✅ opencv import successful')
+          except ImportError as e:
+              print(f'❌ opencv import failed: {e}')
+              sys.exit(1)
+          
+          try:
+              import numpy
+              print('✅ numpy import successful')
+          except ImportError as e:
+              print(f'❌ numpy import failed: {e}')
+              sys.exit(1)
+          
+          print('🎉 All critical imports successful!')
+          "
+
+      - name: Environment validation summary
+        run: |
+          echo "=== Dependency Validation Summary ==="
+          echo "✅ uv sync completed successfully"
+          echo "✅ Virtual environment created"
+          echo "✅ Critical packages importable"
+          echo "✅ Environment is ready for development"
+          echo ""
+          echo "This branch is safe to merge regarding dependencies."
