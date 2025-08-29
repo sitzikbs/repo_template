@@ -20,5 +20,7 @@ applyTo: "terminal"
 ---
 
 ## Project-Specific Commands
-- **Running the Project**: To run the Python server, use `poetry run python -m your_project_name.main`.
-- **Running Tests**: To run tests, use `poetry run pytest`.
+
+- **Dependency Management**: Use `uv sync` to install dependencies from `pyproject.toml`.
+- **Running the Project**: Use `uv run main.py` (or `uv run -m your_project_name.main` for modules).
+- **Running Tests**: Use `uv run pytest` to run tests.
