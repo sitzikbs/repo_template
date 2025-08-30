@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 # template_to_my_new_repo.sh
 # Usage: ./template_to_my_new_repo.sh <new_project_name> [<remote_repo_url>]
 #
