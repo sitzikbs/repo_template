@@ -23,7 +23,6 @@
     "editor.rulers": [
         120
     ],
-    "github-enterprise.uri": "https://github.rbx.com/",
     "python.testing.pytestArgs": [
         "pipeline"
     ],
